@@ -66,7 +66,7 @@ class ProjectState extends State<Project> {
 
   moveProject(projectId: string, newStatus: ProjectStatus) {
     const project = this.projects.find((prj) => prj.id === projectId);
-    if (project) {
+    if (project && project.status !== newStatus) {
       project.status = newStatus;
       this.updateListeners();
     }
@@ -249,6 +249,8 @@ class ProjectList
       prjId,
       this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished
     );
+    const ListEl = this.element.querySelector("ul")!;
+    ListEl.classList.remove("droppable");
   }
 
   @autobind
